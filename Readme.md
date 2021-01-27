@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Коля Ганин](https://up.htmlacademy.ru/javascript/22/user/1282379).
-* Наставник: `Неизвестно`.
+* Наставник: [Магомед Кандаев](https://htmlacademy.ru/profile/magomedkandaev).
 
 ---
 
