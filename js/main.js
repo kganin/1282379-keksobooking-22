@@ -1,8 +1,8 @@
 'use strict';
 
-let getRandomInt = function(min, max) {
-  if (min < 0 || max < 0 || min >= max) {
-    return 'Ошибка!!!'
+const getRandomInt = function(min, max) {
+  if (min < 0 || min > max) {
+    return null
   }
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -10,11 +10,11 @@ let getRandomInt = function(min, max) {
 }
 getRandomInt();
 
-let getCoord = function(min, max, decimal = 7) {
-  if (min < 0 || max < 0 || min >= max) {
-    return 'Ошибка!!!'
+const getRandomFloat = function(min, max, decimal = 7) {
+  if (min < 0 || min > max) {
+    return null
   }
-  let randomNum = Math.random() * (max - min) + min;
-  return Number(randomNum.toFixed(decimal));
+  const randomNumber = Math.random() * (max - min) + min;
+  return Number(randomNumber.toFixed(decimal));
 }
-getCoord();
+getRandomFloat();
