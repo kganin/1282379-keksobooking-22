@@ -1,40 +1,5 @@
 'use strict';
 
-const getRandomInt = (min, max) => {
-  if (min < 0 || min > max) {
-    throw new Error('Задан неверный диапазон');
-  }
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-const getRandomFloat = (min, max, decimal = 5) => {
-  if (min < 0 || min > max) {
-    throw new Error('Задан неверный диапазон');
-  }
-  const randomNumber = Math.random() * (max - min) + min;
-  return Number(randomNumber.toFixed(decimal));
-}
-
-const shuffleArray = (arr) => {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    let swap = arr[i];
-    arr[i] = arr[j];
-    arr[j] = swap;
-  }
-  return arr;
-}
-
-const getRandomArrFrom = (arr) => {
-  return shuffleArray(arr).slice(getRandomInt(0, arr.length - 1));
-};
-
-const getRandomArrayElement = (arr) => {
-  return arr[getRandomInt(0, arr.length - 1)];
-};
-
 const FEATURES = [
   'wifi',
   'dishwasher',
@@ -78,6 +43,38 @@ const DESCRIPTIONS = [
 
 const SIMILAR_ADS_COUNT = 10;
 
+const getRandomInt = (min, max) => {
+  if (min < 0 || min > max) {
+    throw new Error('Задан неверный диапазон');
+  }
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const getRandomFloat = (min, max, decimal = 5) => {
+  if (min < 0 || min > max) {
+    throw new Error('Задан неверный диапазон');
+  }
+  const randomNumber = Math.random() * (max - min) + min;
+  return Number(randomNumber.toFixed(decimal));
+}
+
+const shuffleArray = elements => {
+  const arrayCopy = elements.slice(0);
+  for (let i = arrayCopy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const swap = arrayCopy[i];
+    arrayCopy[i] = arrayCopy[j];
+    arrayCopy[j] = swap;
+  }
+  return arrayCopy;
+}
+
+const getRandomArray = elements => shuffleArray(elements).slice(getRandomInt(0, elements.length - 1));
+
+const getRandomArrayElement = elements => elements[getRandomInt(0, elements.length - 1)];
+
 const createAd = () => {
   const X = getRandomFloat(35.65000, 35.70000);
   const Y = getRandomFloat(139.70000, 139.80000);
@@ -94,9 +91,9 @@ const createAd = () => {
       guests: getRandomInt(1, 7),
       checkin: getRandomArrayElement(HOURS),
       checkout: getRandomArrayElement(HOURS),
-      features: getRandomArrFrom(FEATURES).join(', '),
+      features: getRandomArray(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
-      photos: getRandomArrFrom(PHOTOS).join(', '),
+      photos: getRandomArray(PHOTOS),
     },
     location: {
       x: X,
