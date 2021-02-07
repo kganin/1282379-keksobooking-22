@@ -61,14 +61,14 @@ const getRandomFloat = (min, max, decimal = 5) => {
 }
 
 const shuffleArray = elements => {
-  const arrayCopy = elements.slice(0);
-  for (let i = arrayCopy.length - 1; i > 0; i--) {
+  const clonedElements = elements.slice(0);
+  for (let i = clonedElements.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const swap = arrayCopy[i];
-    arrayCopy[i] = arrayCopy[j];
-    arrayCopy[j] = swap;
+    const swap = clonedElements[i];
+    clonedElements[i] = clonedElements[j];
+    clonedElements[j] = swap;
   }
-  return arrayCopy;
+  return clonedElements;
 }
 
 const getRandomArray = elements => shuffleArray(elements).slice(getRandomInt(0, elements.length - 1));
