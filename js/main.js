@@ -1,5 +1,4 @@
 import { getSimilarAds } from './data.js';
+import './popup.js';
 
-const SIMILAR_ADS_COUNT = 10;
-
-getSimilarAds(SIMILAR_ADS_COUNT);
+getSimilarAds(10);
