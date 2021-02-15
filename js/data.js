@@ -19,14 +19,18 @@ const TITLES = [
   'Неуютное бунгало по колено в воде',
 ];
 
-const TYPES = {
+export const TYPES = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
   bungalow: 'Бунгало',
 };
 
-const HOURS = ['12:00', '13:00', '14:00'];
+const HOURS = [
+  '12:00',
+  '13:00',
+  '14:00',
+];
 
 const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
@@ -41,7 +45,7 @@ const DESCRIPTIONS = [
   'Уютная студия в центре города со всем необходимым',
 ];
 
-const getAd = () => {
+export const getAdData = () => {
   const X = getRandomFloat(35.65000, 35.70000);
   const Y = getRandomFloat(139.70000, 139.80000);
   return {
@@ -65,9 +69,6 @@ const getAd = () => {
       x: X,
       y: Y,
     },
-  }
-};
+  }};
 
-export const getSimilarAds = (quantity) => new Array(quantity).fill(null).map(getAd);
-
-export {TYPES}
+export const getSimilarAds = (quantity) => new Array(quantity).fill(null).map(getAdData);

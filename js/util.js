@@ -15,7 +15,7 @@ export const getRandomFloat = (min, max, decimal = 5) => {
   return Number(randomNumber.toFixed(decimal));
 }
 
-export const shuffleArray = (elements) => {
+const shuffleArray = (elements) => {
   const clonedElements = elements.slice(0);
   for (let i = clonedElements.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
