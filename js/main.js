@@ -1,5 +1,9 @@
-import { getSimilarAds } from './data.js';
+import {getSimilarAds} from './data.js';
+import {renderAd} from './ad.js';
 
 const SIMILAR_ADS_COUNT = 10;
 
-getSimilarAds(SIMILAR_ADS_COUNT);
+const ads = getSimilarAds(SIMILAR_ADS_COUNT);
+const newAd = ads[0];
+
+renderAd(newAd);

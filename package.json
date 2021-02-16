@@ -20,7 +20,7 @@
     "lodash": "^4.17.20"
   },
   "scripts": {
-    "start": "browser-sync start --server -b 'google chrome' --no-ui --files \"js/**/*.js\"",
+    "start": "browser-sync start --server -b 'google chrome' --no-ui --files 'js/**/*.js' 'index.html'",
     "test": "eslint js/"
   },
   "engines": {

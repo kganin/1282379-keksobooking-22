@@ -19,14 +19,18 @@ const TITLES = [
   'Неуютное бунгало по колено в воде',
 ];
 
-const TYPES = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-];
+export const TYPES = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+};
 
-const HOURS = ['12:00', '13:00', '14:00'];
+const HOURS = [
+  '12:00',
+  '13:00',
+  '14:00',
+];
 
 const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
@@ -41,7 +45,7 @@ const DESCRIPTIONS = [
   'Уютная студия в центре города со всем необходимым',
 ];
 
-const createAd = () => {
+export const getAdData = () => {
   const X = getRandomFloat(35.65000, 35.70000);
   const Y = getRandomFloat(139.70000, 139.80000);
   return {
@@ -52,7 +56,7 @@ const createAd = () => {
       title: getRandomArrayElement(TITLES),
       address: `${X}, ${Y}`,
       price: getRandomInt(1500, 7000),
-      type: getRandomArrayElement(TYPES),
+      type: getRandomArrayElement(Object.keys(TYPES)),
       rooms: getRandomInt(1, 5),
       guests: getRandomInt(1, 7),
       checkin: getRandomArrayElement(HOURS),
@@ -65,9 +69,6 @@ const createAd = () => {
       x: X,
       y: Y,
     },
-  }
-};
+  }};
 
-const getSimilarAds = (quantity) => new Array(quantity).fill(null).map(createAd);
-
-export { getSimilarAds }
+export const getSimilarAds = (quantity) => new Array(quantity).fill(null).map(getAdData);
