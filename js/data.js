@@ -19,11 +19,23 @@ const TITLES = [
   'Неуютное бунгало по колено в воде',
 ];
 
-export const TYPES = {
-  palace: 'Дворец',
-  flat: 'Квартира',
-  house: 'Дом',
-  bungalow: 'Бунгало',
+export const ACCOMODATION_TYPES = {
+  palace: {
+    type: 'Дворец',
+    minPrice: 10000,
+  },
+  flat: {
+    type: 'Квартира',
+    minPrice: 1000,
+  },
+  house: {
+    type: 'Дом',
+    minPrice: 5000,
+  },
+  bungalow: {
+    type: 'Бунгало',
+    minPrice: 0,
+  },
 };
 
 const HOURS = [
@@ -56,7 +68,7 @@ export const getAdData = () => {
       title: getRandomArrayElement(TITLES),
       address: `${X}, ${Y}`,
       price: getRandomInt(1500, 7000),
-      type: getRandomArrayElement(Object.keys(TYPES)),
+      type: getRandomArrayElement(Object.keys(ACCOMODATION_TYPES)),
       rooms: getRandomInt(1, 5),
       guests: getRandomInt(1, 7),
       checkin: getRandomArrayElement(HOURS),
