@@ -7,9 +7,9 @@ const timeOutField = document.querySelector('#timeout');
 const hoursBlock = document.querySelector('.ad-form__element--time');
 
 const onTypeFieldChange = () => {
-  const currentType = ACCOMODATION_TYPES[typeField.value]['minPrice'];
-  priceField.setAttribute('placeholder', currentType);
-  priceField.setAttribute('min', currentType);
+  const currentMinPrice = ACCOMODATION_TYPES[typeField.value]['minPrice'];
+  priceField.setAttribute('placeholder', currentMinPrice);
+  priceField.setAttribute('min', currentMinPrice);
 }
 
 const onSelectChange = (evt) => {
