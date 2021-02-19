@@ -1,5 +1,6 @@
 import {getSimilarAds} from './data.js';
 import {renderAd} from './ad.js';
+import './form.js';
 
 const SIMILAR_ADS_COUNT = 10;
 

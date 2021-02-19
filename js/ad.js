@@ -1,4 +1,4 @@
-import {TYPES} from './data.js';
+import {ACCOMODATION_TYPES} from './data.js';
 
 const GUESTS_WORD_FORMS = [
   'гостя',
@@ -41,7 +41,7 @@ export const renderAd = (adData) => {
   ad.querySelector('.popup__title').textContent = adData.offer.title;
   ad.querySelector('.popup__text--address').textContent = adData.offer.address;
   ad.querySelector('.popup__text--price').innerHTML = `${adData.offer.price} <span>₽/ночь</span>`;
-  ad.querySelector('.popup__type').textContent = TYPES[adData.offer.type];
+  ad.querySelector('.popup__type').textContent = ACCOMODATION_TYPES[adData.offer.type]['type'];
   ad.querySelector('.popup__text--capacity').textContent = `${adData.offer.rooms} ${getWordForm(adData.offer.rooms, ROOMS_WORD_FORMS)} для ${adData.offer.guests} ${getWordForm(adData.offer.guests, GUESTS_WORD_FORMS)}`;
   ad.querySelector('.popup__text--time').textContent = `Заезд после ${adData.offer.checkin}, выезд до ${adData.offer.checkout}`;
   ad.querySelector('.popup__description').textContent = adData.offer.description;
