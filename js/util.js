@@ -26,6 +26,6 @@ const shuffleArray = (elements) => {
   return clonedElements;
 }
 
-export const getRandomArray = (elements) => shuffleArray(elements).slice(getRandomInt(0, elements.length - 1));
+export const getRandomArray = (elements) => shuffleArray(elements).slice(getRandomInt(0, elements.length));
 
 export const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];

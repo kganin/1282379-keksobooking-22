@@ -1026,3 +1026,12 @@ fieldset {
 .hidden {
   display: none;
 }
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.map__feature--disabled {
+  background-color: #ababab;
+}

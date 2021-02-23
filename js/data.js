@@ -57,6 +57,8 @@ const DESCRIPTIONS = [
   'Уютная студия в центре города со всем необходимым',
 ];
 
+const ADS_COUNT = 10;
+
 export const getAdData = () => {
   const X = getRandomFloat(35.65000, 35.70000);
   const Y = getRandomFloat(139.70000, 139.80000);
@@ -83,4 +85,5 @@ export const getAdData = () => {
     },
   }};
 
-export const getSimilarAds = (quantity) => new Array(quantity).fill(null).map(getAdData);
+export const getAdsData = (quantity) => new Array(quantity).fill(null).map(getAdData);
+export const adsData = getAdsData(ADS_COUNT);

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="leaflet/leaflet.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
 </head>
@@ -24,6 +25,7 @@
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
         <form action="#" class="map__filters" autocomplete="off">
+          <fieldset class="map__filters-wrapper">
           <select name="housing-type" id="housing-type" class="map__filter">
             <option value="any" selected>Любой тип жилья</option>
             <option value="palace">Дворец</option>
@@ -49,6 +51,7 @@
             <option value="1">Один гость</option>
             <option value="0">Не для гостей</option>
           </select>
+          </fieldset>
           <fieldset id="housing-features" class="map__features">
             <input type="checkbox" name="features" value="wifi" id="filter-wifi" class="map__checkbox visually-hidden">
             <label class="map__feature map__feature--wifi" for="filter-wifi">Wi-Fi</label>
@@ -70,7 +73,7 @@
     <!-- Форма объявления -->
     <section class="notice">
       <h2 class="notice__title">Ваше объявление</h2>
-      <form class="ad-form" method="post" enctype="multipart/form-data" autocomplete="off">
+      <form class="ad-form" method="post" action="https://echo.htmlacademy.ru/courses" enctype="multipart/form-data" autocomplete="off">
         <fieldset class="ad-form-header">
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>
           <div class="ad-form-header__upload">
@@ -90,7 +93,7 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text">
+          <input id="address" name="address" type="text" readonly>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
@@ -228,5 +231,6 @@
     </div>
   </template>
   <script src="js/main.js" type="module"></script>
+  <script src="leaflet/leaflet.js"></script>
 </body>
 </html>

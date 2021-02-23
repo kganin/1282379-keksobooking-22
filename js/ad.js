@@ -1,4 +1,4 @@
-import {ACCOMODATION_TYPES} from './data.js';
+import { ACCOMODATION_TYPES } from './data.js';
 
 const GUESTS_WORD_FORMS = [
   'гостя',
@@ -11,12 +11,7 @@ const ROOMS_WORD_FORMS = [
   'комнат',
 ];
 
-const adList = document.querySelector('.map__canvas');
 const adTemplate = document.querySelector('#card').content.querySelector('.popup');
-const ad = adTemplate.cloneNode(true);
-
-const photosContainer = ad.querySelector('.popup__photos');
-const featuresContainer = ad.querySelector('.popup__features');
 
 const getWordForm = (num, wordForms) => {
   if (num > 1 && num < 5) return wordForms[1];
@@ -32,20 +27,24 @@ const getPhotos = (container, photos) => {
 
 const getFeatures = (container, features) => {
   container.innerHTML = '';
+  if (features.length === 0) {
+    container.remove();
+  }
   container.insertAdjacentHTML('afterbegin', features.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`)
     .join('\n'));
 };
 
-export const renderAd = (adData) => {
-  ad.querySelector('.popup__avatar').src = adData.author.avatar;
-  ad.querySelector('.popup__title').textContent = adData.offer.title;
-  ad.querySelector('.popup__text--address').textContent = adData.offer.address;
-  ad.querySelector('.popup__text--price').innerHTML = `${adData.offer.price} <span>₽/ночь</span>`;
-  ad.querySelector('.popup__type').textContent = ACCOMODATION_TYPES[adData.offer.type]['type'];
-  ad.querySelector('.popup__text--capacity').textContent = `${adData.offer.rooms} ${getWordForm(adData.offer.rooms, ROOMS_WORD_FORMS)} для ${adData.offer.guests} ${getWordForm(adData.offer.guests, GUESTS_WORD_FORMS)}`;
-  ad.querySelector('.popup__text--time').textContent = `Заезд после ${adData.offer.checkin}, выезд до ${adData.offer.checkout}`;
-  ad.querySelector('.popup__description').textContent = adData.offer.description;
-  getPhotos(photosContainer, adData.offer.photos);
-  getFeatures(featuresContainer, adData.offer.features);
-  adList.appendChild(ad);
+export const renderNewAd = (adData) => {
+  const newAd = adTemplate.cloneNode(true);
+  newAd.querySelector('.popup__avatar').src = adData.author.avatar;
+  newAd.querySelector('.popup__title').textContent = adData.offer.title;
+  newAd.querySelector('.popup__text--address').textContent = adData.offer.address;
+  newAd.querySelector('.popup__text--price').innerHTML = `${adData.offer.price} <span>₽/ночь</span>`;
+  newAd.querySelector('.popup__type').textContent = ACCOMODATION_TYPES[adData.offer.type]['type'];
+  newAd.querySelector('.popup__text--capacity').textContent = `${adData.offer.rooms} ${getWordForm(adData.offer.rooms, ROOMS_WORD_FORMS)} для ${adData.offer.guests} ${getWordForm(adData.offer.guests, GUESTS_WORD_FORMS)}`;
+  newAd.querySelector('.popup__text--time').textContent = `Заезд после ${adData.offer.checkin}, выезд до ${adData.offer.checkout}`;
+  newAd.querySelector('.popup__description').textContent = adData.offer.description;
+  getPhotos(newAd.querySelector('.popup__photos'), adData.offer.photos);
+  getFeatures(newAd.querySelector('.popup__features'), adData.offer.features);
+  return newAd;
 };
