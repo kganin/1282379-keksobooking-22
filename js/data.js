@@ -19,7 +19,7 @@ const TITLES = [
   'Неуютное бунгало по колено в воде',
 ];
 
-export const ACCOMODATION_TYPES = {
+const ACCOMODATION_TYPES = {
   palace: {
     type: 'Дворец',
     minPrice: 10000,
@@ -57,7 +57,9 @@ const DESCRIPTIONS = [
   'Уютная студия в центре города со всем необходимым',
 ];
 
-export const getAdData = () => {
+const ADS_COUNT = 10;
+
+const getAdData = () => {
   const X = getRandomFloat(35.65000, 35.70000);
   const Y = getRandomFloat(139.70000, 139.80000);
   return {
@@ -83,4 +85,7 @@ export const getAdData = () => {
     },
   }};
 
-export const getSimilarAds = (quantity) => new Array(quantity).fill(null).map(getAdData);
+const getAdsData = (quantity) => new Array(quantity).fill(null).map(getAdData);
+const adsData = getAdsData(ADS_COUNT);
+
+export { ACCOMODATION_TYPES, getAdData, getAdsData, adsData };

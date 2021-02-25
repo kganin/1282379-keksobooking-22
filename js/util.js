@@ -1,4 +1,4 @@
-export const getRandomInt = (min, max) => {
+const getRandomInt = (min, max) => {
   if (min < 0 || min > max) {
     throw new Error('Задан неверный диапазон');
   }
@@ -7,7 +7,7 @@ export const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export const getRandomFloat = (min, max, decimal = 5) => {
+const getRandomFloat = (min, max, decimal = 5) => {
   if (min < 0 || min > max) {
     throw new Error('Задан неверный диапазон');
   }
@@ -26,6 +26,8 @@ const shuffleArray = (elements) => {
   return clonedElements;
 }
 
-export const getRandomArray = (elements) => shuffleArray(elements).slice(getRandomInt(0, elements.length - 1));
+const getRandomArray = (elements) => shuffleArray(elements).slice(getRandomInt(0, elements.length));
 
-export const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
+
+export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement };
