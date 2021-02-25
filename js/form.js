@@ -7,7 +7,7 @@ const timeInField = document.querySelector('#timein');
 const timeOutField = document.querySelector('#timeout');
 const hoursBlock = document.querySelector('.ad-form__element--time');
 const adForm = document.querySelector('.ad-form');
-export const formFields = document.querySelectorAll('fieldset');
+const formFields = document.querySelectorAll('fieldset');
 const addressField = document.querySelector('#address');
 const mapFeatureFields = document.querySelectorAll('.map__feature');
 
@@ -32,13 +32,13 @@ const disableForm = () => {
 
 disableForm();
 
-export const fillAddressField = (coordinates) => {
+const fillAddressField = (coordinates) => {
   if (!(adForm.classList.contains('ad-form--disabled'))) {
     return addressField.value = `${coordinates.lat.toFixed(5)}, ${coordinates.lng.toFixed(5)}`;
   }
 }
 
-export const enableForm = () => {
+const enableForm = () => {
   formFields.forEach((field) => {
     field.disabled = false;
     field.classList.remove('disabled');
@@ -50,3 +50,5 @@ export const enableForm = () => {
 
 hoursBlock.addEventListener('change', onSelectChange);
 typeField.addEventListener('change', onTypeFieldChange);
+
+export { fillAddressField, enableForm };

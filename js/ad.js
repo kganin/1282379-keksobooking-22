@@ -34,7 +34,7 @@ const getFeatures = (container, features) => {
     .join('\n'));
 };
 
-export const renderNewAd = (adData) => {
+const renderNewAd = (adData) => {
   const newAd = adTemplate.cloneNode(true);
   newAd.querySelector('.popup__avatar').src = adData.author.avatar;
   newAd.querySelector('.popup__title').textContent = adData.offer.title;
@@ -48,3 +48,5 @@ export const renderNewAd = (adData) => {
   getFeatures(newAd.querySelector('.popup__features'), adData.offer.features);
   return newAd;
 };
+
+export { renderNewAd };
