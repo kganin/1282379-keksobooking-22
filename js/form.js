@@ -1,15 +1,39 @@
 import { ACCOMODATION_TYPES } from './data.js'
 import { START_LOCATION } from './map.js';
 
-const priceField = document.querySelector('#price');
-const typeField = document.querySelector('#type');
-const timeInField = document.querySelector('#timein');
-const timeOutField = document.querySelector('#timeout');
-const hoursBlock = document.querySelector('.ad-form__element--time');
 const adForm = document.querySelector('.ad-form');
-const formFields = document.querySelectorAll('fieldset');
-const addressField = document.querySelector('#address');
-const mapFeatureFields = document.querySelectorAll('.map__feature');
+const priceField = adForm.querySelector('#price');
+const typeField = adForm.querySelector('#type');
+const timeInField = adForm.querySelector('#timein');
+const timeOutField = adForm.querySelector('#timeout');
+const hoursBlock = adForm.querySelector('.ad-form__element--time');
+const formFields = adForm.querySelectorAll('fieldset');
+const addressField = adForm.querySelector('#address');
+const mapFeatureFields = adForm.querySelectorAll('.map__feature');
+
+const roomNumber = adForm.querySelector('#room_number');
+const guestNumber = adForm.querySelector('#capacity');
+
+const capacity = {
+  1: [1],
+  2: [1,2],
+  3: [1,2,3],
+  100: [0],
+};
+
+const onRoomNumberChange = () => {
+  (Object.values(guestNumber.children)).forEach((option)=>{
+    option.disabled = true;
+  });
+  capacity[roomNumber.value].forEach((elem)=>{
+    Object.values(guestNumber.children).forEach((option)=>{
+      if (elem === Number(option.value)) {
+        option.disabled = false;
+        option.selected = true;
+      }
+    });
+  });
+}
 
 const onTypeFieldChange = () => {
   priceField.placeholder = ACCOMODATION_TYPES[typeField.value]['minPrice'];
@@ -50,5 +74,8 @@ const enableForm = () => {
 
 hoursBlock.addEventListener('change', onSelectChange);
 typeField.addEventListener('change', onTypeFieldChange);
+roomNumber.addEventListener('change', onRoomNumberChange)
 
 export { fillAddressField, enableForm };
+
+
