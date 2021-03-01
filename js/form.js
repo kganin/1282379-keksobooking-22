@@ -10,9 +10,13 @@ const hoursBlock = adForm.querySelector('.ad-form__element--time');
 const formFields = adForm.querySelectorAll('fieldset');
 const addressField = adForm.querySelector('#address');
 const mapFeatureFields = adForm.querySelectorAll('.map__feature');
-
+const titleField = adForm.querySelector('#title');
 const roomNumber = adForm.querySelector('#room_number');
 const guestNumber = adForm.querySelector('#capacity');
+
+const MIN_NAME_LENGTH = 30;
+const MAX_NAME_LENGTH = 100;
+const MAX_PRICE_PER_NIGHT = 1000000;
 
 const capacity = {
   1: [1],
@@ -40,6 +44,19 @@ const onTypeFieldChange = () => {
   priceField.min = ACCOMODATION_TYPES[typeField.value]['minPrice'];
 }
 
+const onPriceFieldInput = () => {
+  if (priceField.value < ACCOMODATION_TYPES[typeField.value]['minPrice']) {
+    priceField.setCustomValidity(`Минимальная стоимость - ${ACCOMODATION_TYPES[typeField.value]['minPrice']} руб.`)
+  }
+  else if (priceField.value > MAX_PRICE_PER_NIGHT) {
+    priceField.setCustomValidity(`Стоимость не должна превышать ${MAX_PRICE_PER_NIGHT} руб.`)
+  }
+  else {
+    priceField.setCustomValidity('');
+  }
+  priceField.reportValidity();
+}
+
 const onSelectChange = (evt) => {
   timeInField.value = evt.target.value;
   timeOutField.value = evt.target.value;
@@ -53,8 +70,6 @@ const disableForm = () => {
   mapFeatureFields.forEach((field) => field.classList.add('map__feature--disabled'));
   adForm.classList.add('ad-form--disabled');
 }
-
-disableForm();
 
 const fillAddressField = (coordinates) => {
   if (!(adForm.classList.contains('ad-form--disabled'))) {
@@ -72,10 +87,24 @@ const enableForm = () => {
   addressField.value = fillAddressField(START_LOCATION);
 }
 
+const onTitleFieldInput = () => {
+  const valueLength = titleField.value.length;
+
+  if (valueLength < MIN_NAME_LENGTH) {
+    titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+  } else if (valueLength > MAX_NAME_LENGTH) {
+    titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
+  } else {
+    titleField.setCustomValidity('');
+  }
+
+  titleField.reportValidity();
+};
+
 hoursBlock.addEventListener('change', onSelectChange);
 typeField.addEventListener('change', onTypeFieldChange);
-roomNumber.addEventListener('change', onRoomNumberChange)
+roomNumber.addEventListener('change', onRoomNumberChange);
+titleField.addEventListener('input', onTitleFieldInput);
+priceField.addEventListener('input', onPriceFieldInput);
 
-export { fillAddressField, enableForm };
-
-
+export { fillAddressField, enableForm, disableForm };
