@@ -5,8 +5,8 @@ import { disableForm, enableForm, fillAddressField } from './form.js';
 
 const START_ZOOM = 12;
 const START_LOCATION =  {
-  lat:  35.68643,
-  lng: 139.70627,
+  lat:  35.68040,
+  lng: 139.76900,
 };
 
 const MAIN_PIN_SIZE = [52, 52];

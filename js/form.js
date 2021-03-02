@@ -26,11 +26,9 @@ const capacity = {
 };
 
 const onRoomNumberChange = () => {
-  (Object.values(guestNumber.children)).forEach((option)=>{
-    option.disabled = true;
-  });
-  capacity[roomNumber.value].forEach((elem)=>{
-    Object.values(guestNumber.children).forEach((option)=>{
+  Object.values(guestNumber.children).forEach((option) => option.disabled = true);
+  capacity[roomNumber.value].forEach((elem) => {
+    Object.values(guestNumber.children).forEach((option) => {
       if (elem === Number(option.value)) {
         option.disabled = false;
         option.selected = true;
@@ -78,10 +76,11 @@ const fillAddressField = (coordinates) => {
 }
 
 const enableForm = () => {
+  onRoomNumberChange();
   formFields.forEach((field) => {
     field.disabled = false;
     field.classList.remove('disabled');
-  })
+  });
   mapFeatureFields.forEach((field) => field.classList.remove('map__feature--disabled'));
   adForm.classList.remove('ad-form--disabled');
   addressField.value = fillAddressField(START_LOCATION);
@@ -89,7 +88,6 @@ const enableForm = () => {
 
 const onTitleFieldInput = () => {
   const valueLength = titleField.value.length;
-
   if (valueLength < MIN_NAME_LENGTH) {
     titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
   } else if (valueLength > MAX_NAME_LENGTH) {
@@ -97,7 +95,6 @@ const onTitleFieldInput = () => {
   } else {
     titleField.setCustomValidity('');
   }
-
   titleField.reportValidity();
 };
 
