@@ -11,8 +11,8 @@ const formFields = adForm.querySelectorAll('fieldset');
 const addressField = adForm.querySelector('#address');
 const mapFeatureFields = adForm.querySelectorAll('.map__feature');
 const titleField = adForm.querySelector('#title');
-const roomNumber = adForm.querySelector('#room_number');
-const guestNumber = adForm.querySelector('#capacity');
+const roomNumberField = adForm.querySelector('#room_number');
+const guestNumberField = adForm.querySelector('#capacity');
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -25,19 +25,19 @@ const capacity = {
   100: [0],
 };
 
-const onRoomNumberChange = () => {
-  Object.values(guestNumber.children).forEach((option) => option.disabled = true);
-  capacity[roomNumber.value].forEach((elem) => {
-    Object.values(guestNumber.children).forEach((option) => {
-      if (elem === Number(option.value)) {
-        option.disabled = false;
-        option.selected = true;
-      }
-    });
-  });
-}
+const onTitleFieldInput = () => {
+  const valueLength = titleField.value.length;
+  if (valueLength < MIN_NAME_LENGTH) {
+    titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+  } else if (valueLength > MAX_NAME_LENGTH) {
+    titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
+  } else {
+    titleField.setCustomValidity('');
+  }
+  titleField.reportValidity();
+};
 
-const onTypeFieldChange = () => {
+const onAccomodationFieldChange = () => {
   priceField.placeholder = ACCOMODATION_TYPES[typeField.value]['minPrice'];
   priceField.min = ACCOMODATION_TYPES[typeField.value]['minPrice'];
 }
@@ -55,9 +55,29 @@ const onPriceFieldInput = () => {
   priceField.reportValidity();
 }
 
-const onSelectChange = (evt) => {
+const initRoomNumberField = () => {
+  Object.values(guestNumberField.children).forEach((option) => option.disabled = true);
+  capacity[roomNumberField.value].forEach((elem) => {
+    Object.values(guestNumberField.children).forEach((option) => {
+      if (elem === Number(option.value)) {
+        option.disabled = false;
+        option.selected = true;
+      }
+    });
+  });
+};
+
+const onRoomNumberFieldChange = () => initRoomNumberField();
+
+const onHoursBlockChange = (evt) => {
   timeInField.value = evt.target.value;
   timeOutField.value = evt.target.value;
+}
+
+const fillAddressField = (coordinates) => {
+  if (!(adForm.classList.contains('ad-form--disabled'))) {
+    return addressField.value = `${coordinates.lat.toFixed(5)}, ${coordinates.lng.toFixed(5)}`;
+  }
 }
 
 const disableForm = () => {
@@ -69,38 +89,20 @@ const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
 }
 
-const fillAddressField = (coordinates) => {
-  if (!(adForm.classList.contains('ad-form--disabled'))) {
-    return addressField.value = `${coordinates.lat.toFixed(5)}, ${coordinates.lng.toFixed(5)}`;
-  }
-}
-
 const enableForm = () => {
-  onRoomNumberChange();
   formFields.forEach((field) => {
     field.disabled = false;
     field.classList.remove('disabled');
   });
   mapFeatureFields.forEach((field) => field.classList.remove('map__feature--disabled'));
   adForm.classList.remove('ad-form--disabled');
-  addressField.value = fillAddressField(START_LOCATION);
+  fillAddressField(START_LOCATION);
+  initRoomNumberField();
 }
 
-const onTitleFieldInput = () => {
-  const valueLength = titleField.value.length;
-  if (valueLength < MIN_NAME_LENGTH) {
-    titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
-  } else if (valueLength > MAX_NAME_LENGTH) {
-    titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
-  } else {
-    titleField.setCustomValidity('');
-  }
-  titleField.reportValidity();
-};
-
-hoursBlock.addEventListener('change', onSelectChange);
-typeField.addEventListener('change', onTypeFieldChange);
-roomNumber.addEventListener('change', onRoomNumberChange);
+hoursBlock.addEventListener('change', onHoursBlockChange);
+typeField.addEventListener('change', onAccomodationFieldChange);
+roomNumberField.addEventListener('change', onRoomNumberFieldChange);
 titleField.addEventListener('input', onTitleFieldInput);
 priceField.addEventListener('input', onPriceFieldInput);
 
