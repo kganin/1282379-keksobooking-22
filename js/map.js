@@ -1,12 +1,12 @@
 /* global L:readonly */
 import { adsData } from './data.js';
 import { renderNewAd } from './ad.js';
-import { enableForm, fillAddressField } from './form.js';
+import { disableForm, enableForm, fillAddressField } from './form.js';
 
 const START_ZOOM = 12;
 const START_LOCATION =  {
-  lat:  35.68643,
-  lng: 139.70627,
+  lat:  35.68040,
+  lng: 139.76900,
 };
 
 const MAIN_PIN_SIZE = [52, 52];
@@ -14,6 +14,7 @@ const MAIN_PIN_ANCHOR = [26, 52];
 const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
 
+disableForm();
 
 const map = L.map('map-canvas')
   .on('load', enableForm)
@@ -31,13 +32,18 @@ const mainPin = L.icon({
   iconAnchor: MAIN_PIN_ANCHOR,
 });
 
-const onPinDrag = () => {
+const onPinMove = () => {
   const currentLocation = mainMarker.getLatLng();
   fillAddressField(currentLocation);
 };
 
-const mainMarker = L.marker(START_LOCATION, {icon: mainPin, draggable: true})
-  .on('move', onPinDrag)
+const mainMarker = L.marker(START_LOCATION, {
+  icon: mainPin,
+  draggable: true,
+  autoPan: true,
+  autoPanPadding: [50, 50],
+})
+  .on('move', onPinMove)
   .addTo(map);
 
 const getPins = (adsData) => {
