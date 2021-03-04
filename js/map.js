@@ -1,9 +1,10 @@
 /* global L:readonly */
-import { adsData } from './data.js';
 import { renderNewAd } from './ad.js';
 import { disableForm, enableForm, fillAddressField } from './form.js';
+import { getData } from './backend.js'
 
-const START_ZOOM = 12;
+
+const START_ZOOM = 9;
 const START_LOCATION =  {
   lat:  35.68040,
   lng: 139.76900,
@@ -46,7 +47,7 @@ const mainMarker = L.marker(START_LOCATION, {
   .on('move', onPinMove)
   .addTo(map);
 
-const getPins = (adsData) => {
+const renderPins = (adsData) => {
   adsData.forEach((adData) => {
     const pin = L.icon({
       iconUrl: '../img/pin.svg',
@@ -58,6 +59,6 @@ const getPins = (adsData) => {
   });
 }
 
-getPins(adsData);
+getData(renderPins);
 
 export { map, START_LOCATION };

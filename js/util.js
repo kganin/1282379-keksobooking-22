@@ -30,4 +30,17 @@ const getRandomArray = (elements) => shuffleArray(elements).slice(getRandomInt(0
 
 const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
-export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement };
+const checkStatus = (response) => {
+  if (response.ok) {
+    return response;
+  }
+
+  const {statusText, status} = response;
+  throw new Error(`${status} — ${statusText}`);
+}
+
+const showAlert = (message) => {
+  alert(message);
+}
+
+export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement, checkStatus, showAlert };

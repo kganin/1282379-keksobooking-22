@@ -1,5 +1,6 @@
-import { ACCOMODATION_TYPES } from './data.js'
 import { START_LOCATION } from './map.js';
+import { sendData } from './backend.js'
+import { showAlert } from './util.js'
 
 const adForm = document.querySelector('.ad-form');
 const priceField = adForm.querySelector('#price');
@@ -23,6 +24,25 @@ const capacity = {
   2: [1,2],
   3: [1,2,3],
   100: [0],
+};
+
+const ACCOMODATION_TYPES = {
+  palace: {
+    type: 'Дворец',
+    minPrice: 10000,
+  },
+  flat: {
+    type: 'Квартира',
+    minPrice: 1000,
+  },
+  house: {
+    type: 'Дом',
+    minPrice: 5000,
+  },
+  bungalow: {
+    type: 'Бунгало',
+    minPrice: 0,
+  },
 };
 
 const onTitleFieldInput = () => {
@@ -100,10 +120,24 @@ const enableForm = () => {
   initRoomNumberField();
 }
 
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess('loh'),
+      () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+      new FormData(evt.target),
+    );
+
+    adForm.reset();
+  });
+};
+
 hoursBlock.addEventListener('change', onHoursBlockChange);
 typeField.addEventListener('change', onAccomodationFieldChange);
 roomNumberField.addEventListener('change', onRoomNumberFieldChange);
 titleField.addEventListener('input', onTitleFieldInput);
 priceField.addEventListener('input', onPriceFieldInput);
 
-export { fillAddressField, enableForm, disableForm };
+export { fillAddressField, enableForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit };

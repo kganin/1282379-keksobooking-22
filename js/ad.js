@@ -1,4 +1,4 @@
-import { ACCOMODATION_TYPES } from './data.js';
+import { ACCOMODATION_TYPES } from './form.js';
 
 const GUESTS_WORD_FORMS = [
   'гостя',
@@ -21,6 +21,9 @@ const getWordForm = (num, wordForms) => {
 
 const getPhotos = (container, photos) => {
   container.innerHTML = '';
+  if (photos.length === 0) {
+    container.remove();
+  }
   container.insertAdjacentHTML('afterbegin',photos.map((photo) => `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`)
     .join('\n'));
 };
