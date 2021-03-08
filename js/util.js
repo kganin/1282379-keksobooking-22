@@ -43,4 +43,12 @@ const showAlert = (message) => {
   alert(message);
 }
 
-export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement, checkStatus, showAlert };
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+const isEnterEvent = (evt) => {
+  return evt.key === 'Enter';
+};
+
+export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement, checkStatus, showAlert, isEscEvent, isEnterEvent };

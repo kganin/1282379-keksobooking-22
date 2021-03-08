@@ -1,19 +1,27 @@
-import { START_LOCATION } from './map.js';
+import { START_LOCATION, mainMarker } from './map.js';
 import { sendData } from './backend.js'
-import { showAlert } from './util.js'
+import { errorPopup, successPopup } from './popup.js';
 
 const adForm = document.querySelector('.ad-form');
+const adFormFields = adForm.querySelectorAll('fieldset');
+const adFormCheckboxes = adForm.querySelectorAll('.feature__checkbox');
+
+const mapFiltersForm = document.querySelector('.map__filters');
+const mapFiltersFields = mapFiltersForm.querySelectorAll('fieldset');
+const mapFiltersCheckboxes = mapFiltersForm.querySelectorAll('.map__checkbox');
+const mapFeaturesFields = mapFiltersForm.querySelectorAll('.map__feature');
+
 const priceField = adForm.querySelector('#price');
 const typeField = adForm.querySelector('#type');
 const timeInField = adForm.querySelector('#timein');
 const timeOutField = adForm.querySelector('#timeout');
 const hoursBlock = adForm.querySelector('.ad-form__element--time');
-const formFields = adForm.querySelectorAll('fieldset');
 const addressField = adForm.querySelector('#address');
-const mapFeatureFields = adForm.querySelectorAll('.map__feature');
 const titleField = adForm.querySelector('#title');
 const roomNumberField = adForm.querySelector('#room_number');
 const guestNumberField = adForm.querySelector('#capacity');
+
+const resetButton = adForm.querySelector('.ad-form__reset');
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -100,37 +108,67 @@ const fillAddressField = (coordinates) => {
   }
 }
 
-const disableForm = () => {
-  formFields.forEach((field) => {
-    field.disabled = true;
-    field.classList.add('disabled');
-  })
-  mapFeatureFields.forEach((field) => field.classList.add('map__feature--disabled'));
-  adForm.classList.add('ad-form--disabled');
+const resetCheckboxes = (checkbxoxes) => {
+  checkbxoxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      checkbox.checked = false;
+    }
+  });
 }
 
-const enableForm = () => {
-  formFields.forEach((field) => {
+const disableFields = (fields) => {
+  fields.forEach((field) => {
+    field.disabled = true;
+    field.classList.add('disabled');
+  });
+}
+
+const enableFields = (fields) => {
+  fields.forEach((field) => {
     field.disabled = false;
     field.classList.remove('disabled');
   });
-  mapFeatureFields.forEach((field) => field.classList.remove('map__feature--disabled'));
-  adForm.classList.remove('ad-form--disabled');
-  fillAddressField(START_LOCATION);
-  initRoomNumberField();
 }
 
-const setUserFormSubmit = (onSuccess) => {
+const disableForm = () => {
+  adForm.classList.add('ad-form--disabled');
+  mapFeaturesFields.forEach((field) => field.classList.add('map__feature--disabled'));
+  disableFields(adFormFields);
+  disableFields(mapFiltersFields);
+}
+
+const enableForm = () => {
+  adForm.classList.remove('ad-form--disabled');
+  mapFeaturesFields.forEach((field) => field.classList.remove('map__feature--disabled'));
+  enableFields(adFormFields);
+  enableFields(mapFiltersFields);
+}
+
+const initAdForm = () => {
+  initRoomNumberField();
+  mainMarker.setLatLng(START_LOCATION);
+  fillAddressField(mainMarker.getLatLng());
+}
+
+const resetForms = () => {
+  adForm.reset();
+  mapFiltersForm.reset();
+  resetCheckboxes(adFormCheckboxes);
+  resetCheckboxes(mapFiltersCheckboxes);
+}
+
+const setUserFormSubmit = (onSubmit) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
     sendData(
-      () => onSuccess('loh'),
-      () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+      () => {
+        onSubmit(successPopup, 'Форма отправлена!');
+        resetForms();
+        initAdForm();
+      },
+      (message) => onSubmit(errorPopup, message),
       new FormData(evt.target),
     );
-
-    adForm.reset();
   });
 };
 
@@ -139,5 +177,10 @@ typeField.addEventListener('change', onAccomodationFieldChange);
 roomNumberField.addEventListener('change', onRoomNumberFieldChange);
 titleField.addEventListener('input', onTitleFieldInput);
 priceField.addEventListener('input', onPriceFieldInput);
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault;
+  resetForms();
+  initAdForm();
+})
 
-export { fillAddressField, enableForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit };
+export { fillAddressField, enableForm, initAdForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit };

@@ -2,6 +2,7 @@
 import { renderNewAd } from './ad.js';
 import { disableForm, enableForm, fillAddressField } from './form.js';
 import { getData } from './backend.js'
+import { showPopup } from './popup.js';
 
 
 const START_ZOOM = 9;
@@ -18,7 +19,10 @@ const PIN_ANCHOR = [20, 40];
 disableForm();
 
 const map = L.map('map-canvas')
-  .on('load', enableForm)
+  .on('load', () => {
+    enableForm();
+    fillAddressField(START_LOCATION);
+  })
   .setView(START_LOCATION, START_ZOOM);
 
 L.tileLayer(
@@ -44,8 +48,8 @@ const mainMarker = L.marker(START_LOCATION, {
   autoPan: true,
   autoPanPadding: [50, 50],
 })
-  .on('move', onPinMove)
-  .addTo(map);
+  .addTo(map)
+  .on('move', onPinMove);
 
 const renderPins = (adsData) => {
   adsData.forEach((adData) => {
@@ -59,6 +63,6 @@ const renderPins = (adsData) => {
   });
 }
 
-getData(renderPins);
+getData(renderPins, showPopup);
 
-export { map, START_LOCATION };
+export { map, START_LOCATION, mainMarker };
