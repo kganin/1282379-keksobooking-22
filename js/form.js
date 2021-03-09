@@ -1,5 +1,5 @@
 import { START_LOCATION, mainMarker } from './map.js';
-import { sendData } from './backend.js'
+import { sendData, SERVER_POST } from './backend.js'
 import { errorPopup, successPopup } from './popup.js';
 
 const adForm = document.querySelector('.ad-form');
@@ -57,6 +57,7 @@ const onTitleFieldInput = () => {
   const valueLength = titleField.value.length;
   if (valueLength < MIN_NAME_LENGTH) {
     titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+
   } else if (valueLength > MAX_NAME_LENGTH) {
     titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
   } else {
@@ -161,6 +162,7 @@ const setUserFormSubmit = (onSubmit) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendData(
+      SERVER_POST,
       () => {
         onSubmit(successPopup, 'Форма отправлена!');
         resetForms();
@@ -178,7 +180,7 @@ roomNumberField.addEventListener('change', onRoomNumberFieldChange);
 titleField.addEventListener('input', onTitleFieldInput);
 priceField.addEventListener('input', onPriceFieldInput);
 resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault;
+  evt.preventDefault();
   resetForms();
   initAdForm();
 })

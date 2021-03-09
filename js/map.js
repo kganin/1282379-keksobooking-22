@@ -1,7 +1,7 @@
 /* global L:readonly */
 import { renderNewAd } from './ad.js';
-import { disableForm, enableForm, fillAddressField } from './form.js';
-import { getData } from './backend.js'
+import { disableForm, enableForm, fillAddressField, initAdForm } from './form.js';
+import { getData, SERVER_GET } from './backend.js'
 import { showPopup } from './popup.js';
 
 
@@ -52,19 +52,20 @@ const mainMarker = L.marker(START_LOCATION, {
   .setZIndexOffset(100)
   .on('move', onPinMove);
 
+initAdForm();
+
 const renderPins = (adsData) => {
   adsData.forEach((adData) => {
     const pin = L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: PIN_SIZE,
       iconAnchor: PIN_ANCHOR,
-
     });
     L.marker(Object.values(adData.location), {icon: pin}).setZIndexOffset(0).addTo(map)
       .bindPopup(renderNewAd(adData), {keepInView: true});
   });
 }
 
-getData(renderPins, showPopup);
+getData(SERVER_GET, renderPins, showPopup);
 
 export { map, START_LOCATION, mainMarker };

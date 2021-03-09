@@ -1,15 +1,18 @@
 import { errorPopup } from './popup.js';
 
-const getData = (onSuccess, onFail) => {
-  fetch('https://22.javascript.pages.academy/keksobooking/data')
+const SERVER_GET = 'https://22.javascript.pages.academy/keksobooking/data';
+const SERVER_POST = 'https://22.javascript.pages.academy/keksobooking';
+
+const getData = (url, onSuccess, onFail) => {
+  fetch(url)
     .then((response) => response.ok ? response.json() : onFail(errorPopup, `Не удалось получить данные. Ошибка ${response.status}.`))
     .then(((pins) => onSuccess(pins)))
     .catch(() => onFail(errorPopup, 'Не удалось получить данные. Сервер не отвечает.'))
 };
 
-const sendData = (onSuccess, onFail, formData) => {
+const sendData = (url, onSuccess, onFail, formData) => {
   fetch(
-    'https://22.javascript.pages.academy/keksobooking',
+    url,
     {
       method: 'POST',
       body: formData,
@@ -19,4 +22,4 @@ const sendData = (onSuccess, onFail, formData) => {
     .catch(() => onFail('Не удалось отправить форму. Попробуйте ещё раз'))
 };
 
-export { getData, sendData }
+export { getData, sendData, SERVER_GET, SERVER_POST }
