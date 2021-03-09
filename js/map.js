@@ -21,9 +21,9 @@ disableForm();
 const map = L.map('map-canvas')
   .on('load', () => {
     enableForm();
-    fillAddressField(START_LOCATION);
   })
   .setView(START_LOCATION, START_ZOOM);
+
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -49,6 +49,7 @@ const mainMarker = L.marker(START_LOCATION, {
   autoPanPadding: [50, 50],
 })
   .addTo(map)
+  .setZIndexOffset(100)
   .on('move', onPinMove);
 
 const renderPins = (adsData) => {
@@ -57,8 +58,9 @@ const renderPins = (adsData) => {
       iconUrl: '../img/pin.svg',
       iconSize: PIN_SIZE,
       iconAnchor: PIN_ANCHOR,
+
     });
-    L.marker(Object.values(adData.location), {icon: pin}).addTo(map)
+    L.marker(Object.values(adData.location), {icon: pin}).setZIndexOffset(0).addTo(map)
       .bindPopup(renderNewAd(adData), {keepInView: true});
   });
 }
