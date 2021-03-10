@@ -392,9 +392,13 @@ fieldset {
           box-shadow: 0 0 2px 2px #ff6547;
 }
 
-.ad-form__element--error input {
-  -webkit-box-shadow: 0 0 2px 2px red;
-          box-shadow: 0 0 2px 2px red;
+.ad-form__element--error input:hover {
+  border-color: blue;
+}
+
+.ad-form__element--error input:focus {
+  -webkit-box-shadow: 0 0 2px 2px blue;
+          box-shadow: 0 0 2px 2px blue;
 }
 
 .ad-form__element--time {

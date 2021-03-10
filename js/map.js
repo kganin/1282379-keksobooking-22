@@ -19,16 +19,13 @@ const PIN_ANCHOR = [20, 40];
 disableForm();
 
 const map = L.map('map-canvas')
-  .on('load', () => {
-    enableForm();
-  })
+  .on('load', enableForm)
   .setView(START_LOCATION, START_ZOOM);
 
-
 L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'},
-)
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  })
   .addTo(map);
 
 const mainPin = L.icon({
@@ -61,8 +58,13 @@ const renderPins = (adsData) => {
       iconSize: PIN_SIZE,
       iconAnchor: PIN_ANCHOR,
     });
-    L.marker(Object.values(adData.location), {icon: pin}).setZIndexOffset(0).addTo(map)
-      .bindPopup(renderNewAd(adData), {keepInView: true});
+    L.marker(Object.values(adData.location), {
+      icon: pin,
+    })
+      .addTo(map)
+      .bindPopup(renderNewAd(adData), {
+        keepInView: true,
+      });
   });
 }
 

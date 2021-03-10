@@ -20,21 +20,19 @@ const getWordForm = (num, wordForms) => {
 };
 
 const getPhotos = (container, photos) => {
-  container.innerHTML = '';
   if (photos.length === 0) {
-    container.remove();
+    return container.remove();
   }
-  container.insertAdjacentHTML('afterbegin',photos.map((photo) => `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`)
-    .join('\n'));
+  container.innerHTML = photos.map((photo) => `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`)
+    .join('\n');
 };
 
 const getFeatures = (container, features) => {
-  container.innerHTML = '';
   if (features.length === 0) {
-    container.remove();
+    return container.remove();
   }
-  container.insertAdjacentHTML('afterbegin', features.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`)
-    .join('\n'));
+  container.innerHTML = features.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`)
+    .join('\n');
 };
 
 const renderNewAd = (adData) => {

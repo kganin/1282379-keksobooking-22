@@ -53,11 +53,15 @@ const ACCOMODATION_TYPES = {
   },
 };
 
+// const showError = () => {
+//   adForm.querySelector('.ad-form__element').classList.add('ad-form__element--error')
+//   setTimeout(() => adForm.querySelector('.ad-form__element').classList.remove('ad-form__element--error'), 500)
+// };
+
 const onTitleFieldInput = () => {
   const valueLength = titleField.value.length;
   if (valueLength < MIN_NAME_LENGTH) {
     titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
-
   } else if (valueLength > MAX_NAME_LENGTH) {
     titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
   } else {
