@@ -1,9 +1,11 @@
 /* global L:readonly */
-import { adsData } from './data.js';
 import { renderNewAd } from './ad.js';
-import { disableForm, enableForm, fillAddressField } from './form.js';
+import { disableForm, enableForm, fillAddressField, initAdForm } from './form.js';
+import { getData, SERVER_GET } from './backend.js'
+import { showPopup } from './popup.js';
 
-const START_ZOOM = 12;
+
+const START_ZOOM = 9;
 const START_LOCATION =  {
   lat:  35.68040,
   lng: 139.76900,
@@ -17,8 +19,11 @@ const PIN_ANCHOR = [20, 40];
 disableForm();
 
 const map = L.map('map-canvas')
-  .on('load', enableForm)
+  .on('load', () => {
+    enableForm();
+  })
   .setView(START_LOCATION, START_ZOOM);
+
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -43,21 +48,24 @@ const mainMarker = L.marker(START_LOCATION, {
   autoPan: true,
   autoPanPadding: [50, 50],
 })
-  .on('move', onPinMove)
-  .addTo(map);
+  .addTo(map)
+  .setZIndexOffset(100)
+  .on('move', onPinMove);
 
-const getPins = (adsData) => {
+initAdForm();
+
+const renderPins = (adsData) => {
   adsData.forEach((adData) => {
     const pin = L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: PIN_SIZE,
       iconAnchor: PIN_ANCHOR,
     });
-    L.marker(Object.values(adData.location), {icon: pin}).addTo(map)
+    L.marker(Object.values(adData.location), {icon: pin}).setZIndexOffset(0).addTo(map)
       .bindPopup(renderNewAd(adData), {keepInView: true});
   });
 }
 
-getPins(adsData);
+getData(SERVER_GET, renderPins, showPopup);
 
-export { map, START_LOCATION };
+export { map, START_LOCATION, mainMarker };

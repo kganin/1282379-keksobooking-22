@@ -30,4 +30,25 @@ const getRandomArray = (elements) => shuffleArray(elements).slice(getRandomInt(0
 
 const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
-export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement };
+const checkStatus = (response) => {
+  if (response.ok) {
+    return response;
+  }
+
+  const {statusText, status} = response;
+  throw new Error(`${status} — ${statusText}`);
+}
+
+const showAlert = (message) => {
+  alert(message);
+}
+
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+const isEnterEvent = (evt) => {
+  return evt.key === 'Enter';
+};
+
+export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement, checkStatus, showAlert, isEscEvent, isEnterEvent };
