@@ -3,7 +3,7 @@ import { renderNewAd } from './ad.js';
 import { disableForm, enableForm, fillAddressField, initAdForm } from './form.js';
 import { getData, SERVER_GET } from './backend.js'
 import { showPopup } from './popup.js';
-
+import { getFilteredAdsData } from './filter.js';
 
 const START_ZOOM = 9;
 const START_LOCATION =  {
@@ -52,7 +52,7 @@ const mainMarker = L.marker(START_LOCATION, {
 initAdForm();
 
 const renderPins = (adsData) => {
-  adsData.forEach((adData) => {
+  getFilteredAdsData(adsData).forEach((adData) => {
     const pin = L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: PIN_SIZE,

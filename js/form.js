@@ -189,4 +189,4 @@ resetButton.addEventListener('click', (evt) => {
   initAdForm();
 })
 
-export { fillAddressField, enableForm, initAdForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit };
+export { fillAddressField, enableForm, initAdForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit, mapFiltersForm };
