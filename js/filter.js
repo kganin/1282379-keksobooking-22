@@ -3,18 +3,11 @@ import { mapFiltersForm } from './form.js'
 const filterAccomodation = (adData) => {
   const accomodation = mapFiltersForm.querySelector('#housing-type').value;
   return 'any' === accomodation || adData.offer.type === accomodation;
-}
+};
 
 const filterFeatures = (adData) => {
   const features = [...mapFiltersForm.querySelectorAll('.map__features input:checked')].map((feature) => feature.value);
   return !features.length || features.every((feature) => adData.offer.features.includes(feature));
-}
-
-const getFilteredAdsData = (adsData) => {
-  return adsData.filter((adData) => (
-    filterAccomodation(adData) &&
-    filterPrice(adData)) &&
-    filterFeatures(adData))
 };
 
 const filterPrice = (adData) => {
@@ -35,4 +28,13 @@ const filterPrice = (adData) => {
   }
 };
 
-export { getFilteredAdsData }
+const getFilteredAdsData = (adData) => {
+  return (
+    filterAccomodation(adData) &&
+    filterPrice(adData)) &&
+    filterFeatures(adData)
+};
+
+const setFilterChange = (cb) => mapFiltersForm.addEventListener('change', cb);
+
+export { getFilteredAdsData, setFilterChange }

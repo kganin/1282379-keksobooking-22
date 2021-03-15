@@ -3,7 +3,7 @@ import { renderNewAd } from './ad.js';
 import { disableForm, enableForm, fillAddressField, initAdForm } from './form.js';
 import { getData, SERVER_GET } from './backend.js'
 import { showPopup } from './popup.js';
-import { getFilteredAdsData } from './filter.js';
+import { getFilteredAdsData, setFilterChange } from './filter.js';
 
 const START_ZOOM = 9;
 const START_LOCATION =  {
@@ -15,6 +15,8 @@ const MAIN_PIN_SIZE = [52, 52];
 const MAIN_PIN_ANCHOR = [26, 52];
 const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
+
+let pins = [];
 
 disableForm();
 
@@ -51,23 +53,38 @@ const mainMarker = L.marker(START_LOCATION, {
 
 initAdForm();
 
-const renderPins = (adsData) => {
-  getFilteredAdsData(adsData).forEach((adData) => {
-    const pin = L.icon({
-      iconUrl: '../img/pin.svg',
-      iconSize: PIN_SIZE,
-      iconAnchor: PIN_ANCHOR,
-    });
-    L.marker(Object.values(adData.location), {
-      icon: pin,
-    })
-      .addTo(map)
-      .bindPopup(renderNewAd(adData), {
-        keepInView: true,
-      });
-  });
+const clearMap = (pins) => {
+  pins.forEach((pin) => pin.remove())
 }
 
-getData(SERVER_GET, renderPins, showPopup);
+const renderPins = (adsData) => {
+  clearMap(pins);
+  adsData
+    .filter(getFilteredAdsData)
+    .forEach((adData) => {
+      const pinIcon = L.icon({
+        iconUrl: '../img/pin.svg',
+        iconSize: PIN_SIZE,
+        iconAnchor: PIN_ANCHOR,
+      });
+
+      const pin = L.marker(Object.values(adData.location), {
+        icon: pinIcon,
+      })
+        .addTo(map)
+        .bindPopup(renderNewAd(adData), {
+          keepInView: true,
+        });
+      pins.push(pin);
+    });
+}
+
+const renderFilteredPins = (adsData) => () => renderPins(adsData)
+
+getData(SERVER_GET,
+  (adsData) => {
+    renderPins(adsData)
+    setFilterChange(renderFilteredPins(adsData))
+  }, showPopup);
 
 export { map, START_LOCATION, mainMarker };
