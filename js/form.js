@@ -53,11 +53,6 @@ const ACCOMODATION_TYPES = {
   },
 };
 
-// const showError = () => {
-//   adForm.querySelector('.ad-form__element').classList.add('ad-form__element--error')
-//   setTimeout(() => adForm.querySelector('.ad-form__element').classList.remove('ad-form__element--error'), 500)
-// };
-
 const onTitleFieldInput = () => {
   const valueLength = titleField.value.length;
   if (valueLength < MIN_NAME_LENGTH) {

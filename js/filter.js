@@ -28,11 +28,23 @@ const filterPrice = (adData) => {
   }
 };
 
+const filterRooms = (adData) => {
+  const rooms = mapFiltersForm.querySelector('#housing-rooms').value;
+  return 'any' === rooms || adData.offer.rooms === Number(rooms);
+}
+
+const filterGuests = (adData) => {
+  const guests = mapFiltersForm.querySelector('#housing-guests').value;
+  return 'any' === guests || adData.offer.guests === Number(guests);
+}
+
 const getFilteredAdsData = (adData) => {
   return (
     filterAccomodation(adData) &&
     filterPrice(adData)) &&
-    filterFeatures(adData)
+    filterFeatures(adData) &&
+    filterGuests(adData) &&
+    filterRooms(adData)
 };
 
 const setFilterChange = (cb) => mapFiltersForm.addEventListener('change', cb);

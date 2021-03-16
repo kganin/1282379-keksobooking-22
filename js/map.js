@@ -1,4 +1,6 @@
 /* global L:readonly */
+/* global _:readonly */
+
 import { renderNewAd } from './ad.js';
 import { disableForm, enableForm, fillAddressField, initAdForm } from './form.js';
 import { getData, SERVER_GET } from './backend.js'
@@ -15,6 +17,9 @@ const MAIN_PIN_SIZE = [52, 52];
 const MAIN_PIN_ANCHOR = [26, 52];
 const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
+
+const renderDelay = 500;
+const maxAdsAmount = 10;
 
 let pins = [];
 
@@ -60,6 +65,7 @@ const clearMap = (pins) => {
 const renderPins = (adsData) => {
   clearMap(pins);
   adsData
+    .slice(0, maxAdsAmount)
     .filter(getFilteredAdsData)
     .forEach((adData) => {
       const pinIcon = L.icon({
@@ -84,7 +90,7 @@ const renderFilteredPins = (adsData) => () => renderPins(adsData)
 getData(SERVER_GET,
   (adsData) => {
     renderPins(adsData)
-    setFilterChange(renderFilteredPins(adsData))
+    setFilterChange( _.debounce(renderFilteredPins(adsData), renderDelay))
   }, showPopup);
 
 export { map, START_LOCATION, mainMarker };
