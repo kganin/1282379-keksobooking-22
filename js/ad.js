@@ -19,23 +19,28 @@ const getWordForm = (num, wordForms) => {
   return wordForms[2];
 };
 
-const getPhotos = (container, photos) => {
-  container.innerHTML = '';
-  if (photos.length === 0) {
-    container.remove();
+const fillPhotos = (container, photos) => {
+  if (!photos.length) {
+    return container.remove();
   }
-  container.insertAdjacentHTML('afterbegin',photos.map((photo) => `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`)
-    .join('\n'));
+  container.innerHTML = photos.map((photo) => `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`)
+    .join('\n');
 };
 
-const getFeatures = (container, features) => {
-  container.innerHTML = '';
-  if (features.length === 0) {
-    container.remove();
+const fillFeatures = (container, features) => {
+  if (!features.length) {
+    return container.remove();
   }
-  container.insertAdjacentHTML('afterbegin', features.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`)
-    .join('\n'));
+  container.innerHTML = features.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`)
+    .join('\n');
 };
+
+const fillCapacity = (container, guests, rooms) => {
+  if (!rooms || !guests) {
+    return container.remove();
+  }
+  container.textContent = `${rooms} ${getWordForm(rooms, ROOMS_WORD_FORMS)} для ${guests} ${getWordForm(guests, GUESTS_WORD_FORMS)}`;
+}
 
 const renderNewAd = (adData) => {
   const newAd = adTemplate.cloneNode(true);
@@ -44,11 +49,11 @@ const renderNewAd = (adData) => {
   newAd.querySelector('.popup__text--address').textContent = adData.offer.address;
   newAd.querySelector('.popup__text--price').innerHTML = `${adData.offer.price} <span>₽/ночь</span>`;
   newAd.querySelector('.popup__type').textContent = ACCOMODATION_TYPES[adData.offer.type]['type'];
-  newAd.querySelector('.popup__text--capacity').textContent = `${adData.offer.rooms} ${getWordForm(adData.offer.rooms, ROOMS_WORD_FORMS)} для ${adData.offer.guests} ${getWordForm(adData.offer.guests, GUESTS_WORD_FORMS)}`;
+  fillCapacity(newAd.querySelector('.popup__text--capacity'), adData.offer.guests, adData.offer.rooms)
   newAd.querySelector('.popup__text--time').textContent = `Заезд после ${adData.offer.checkin}, выезд до ${adData.offer.checkout}`;
   newAd.querySelector('.popup__description').textContent = adData.offer.description;
-  getPhotos(newAd.querySelector('.popup__photos'), adData.offer.photos);
-  getFeatures(newAd.querySelector('.popup__features'), adData.offer.features);
+  fillPhotos(newAd.querySelector('.popup__photos'), adData.offer.photos);
+  fillFeatures(newAd.querySelector('.popup__features'), adData.offer.features);
   return newAd;
 };
 

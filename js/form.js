@@ -57,7 +57,6 @@ const onTitleFieldInput = () => {
   const valueLength = titleField.value.length;
   if (valueLength < MIN_NAME_LENGTH) {
     titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
-
   } else if (valueLength > MAX_NAME_LENGTH) {
     titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
   } else {
@@ -185,4 +184,4 @@ resetButton.addEventListener('click', (evt) => {
   initAdForm();
 })
 
-export { fillAddressField, enableForm, initAdForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit };
+export { fillAddressField, enableForm, initAdForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit, mapFiltersForm };
