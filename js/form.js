@@ -1,6 +1,9 @@
 import { START_LOCATION, mainMarker } from './map.js';
 import { sendData, SERVER_POST } from './backend.js'
 import { errorPopup, successPopup } from './popup.js';
+import { setDefaultPreview } from './util.js';
+import { defaultPreviewSrc, previewUserpic } from './userpic.js';
+import { previewPhoto } from './photos.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormFields = adForm.querySelectorAll('fieldset');
@@ -155,6 +158,8 @@ const resetForms = () => {
   mapFiltersForm.reset();
   resetCheckboxes(adFormCheckboxes);
   resetCheckboxes(mapFiltersCheckboxes);
+  setDefaultPreview(previewUserpic, defaultPreviewSrc);
+  setDefaultPreview(previewPhoto, defaultPreviewSrc)
 }
 
 const setUserFormSubmit = (onSubmit) => {

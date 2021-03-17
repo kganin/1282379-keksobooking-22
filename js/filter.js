@@ -47,6 +47,6 @@ const getFilteredAdsData = (adData) => {
     filterRooms(adData)
 };
 
-const setFilterChange = (cb) => mapFiltersForm.addEventListener('change', cb);
+const onFilterChange = (cb) => mapFiltersForm.addEventListener('change', cb);
 
-export { getFilteredAdsData, setFilterChange }
+export { getFilteredAdsData, onFilterChange }
