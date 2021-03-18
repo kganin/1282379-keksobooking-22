@@ -34,4 +34,35 @@ const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const isEnterEvent = (evt) => evt.key === 'Enter';
 
-export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement, isEscEvent, isEnterEvent };
+const onFileUpload = (fileChooser, preview, FILE_TYPES) => {
+  return () => {
+    const file = fileChooser.files[0];
+    const fileName = file.name.toLowerCase();
+
+    const matches = FILE_TYPES.some((it) => {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      const reader = new FileReader();
+
+      reader.addEventListener('load', () => {
+        preview.src = reader.result;
+        preview.style.width = 'auto';
+        preview.style.height = '100%';
+        preview.style.borderRadius = '5px';
+      });
+
+      reader.readAsDataURL(file);
+    }
+  }
+}
+
+const setDefaultPreview = (element, source) => {
+  element.src = source
+  element.width = '40';
+  element.height = '44';
+  element.style = '';
+}
+
+export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement, isEscEvent, isEnterEvent, onFileUpload, setDefaultPreview };

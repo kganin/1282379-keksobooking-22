@@ -5,7 +5,7 @@ import { renderNewAd } from './ad.js';
 import { disableForm, enableForm, fillAddressField, initAdForm } from './form.js';
 import { getData, SERVER_GET } from './backend.js'
 import { showPopup } from './popup.js';
-import { getFilteredAdsData, setFilterChange } from './filter.js';
+import { getFilteredAdsData, onFilterChange } from './filter.js';
 
 const START_ZOOM = 9;
 const START_LOCATION =  {
@@ -19,7 +19,7 @@ const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
 
 const renderDelay = 500;
-const maxAdsAmount = 10;
+const maxAdsCount = 10;
 
 let pins = [];
 
@@ -36,7 +36,7 @@ L.tileLayer(
   .addTo(map);
 
 const mainPin = L.icon({
-  iconUrl: '../img/main-pin.svg',
+  iconUrl: '/img/main-pin.svg',
   iconSize: MAIN_PIN_SIZE,
   iconAnchor: MAIN_PIN_ANCHOR,
 });
@@ -58,18 +58,17 @@ const mainMarker = L.marker(START_LOCATION, {
 
 initAdForm();
 
-const clearMap = (pins) => {
+const clearMap = () => {
   pins.forEach((pin) => pin.remove())
 }
 
 const renderPins = (adsData) => {
-  clearMap(pins);
   adsData
-    .slice(0, maxAdsAmount)
+    .slice(0, maxAdsCount)
     .filter(getFilteredAdsData)
     .forEach((adData) => {
       const pinIcon = L.icon({
-        iconUrl: '../img/pin.svg',
+        iconUrl: '/img/pin.svg',
         iconSize: PIN_SIZE,
         iconAnchor: PIN_ANCHOR,
       });
@@ -85,12 +84,17 @@ const renderPins = (adsData) => {
     });
 }
 
-const renderFilteredPins = (adsData) => () => renderPins(adsData)
+const renderFilteredPins = (adsData) => {
+  return () => {
+    clearMap();
+    renderPins(adsData);
+  }
+}
 
 getData(SERVER_GET,
   (adsData) => {
     renderPins(adsData)
-    setFilterChange( _.debounce(renderFilteredPins(adsData), renderDelay))
+    onFilterChange( _.debounce(renderFilteredPins(adsData), renderDelay))
   }, showPopup);
 
 export { map, START_LOCATION, mainMarker };
