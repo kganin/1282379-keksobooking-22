@@ -1,4 +1,4 @@
-import { START_LOCATION, mainMarker } from './map.js';
+import { START_LOCATION, START_ZOOM, mainMarker, map } from './map.js';
 import { sendData, SERVER_POST } from './backend.js'
 import { errorPopup, successPopup } from './popup.js';
 import { setDefaultPreview } from './util.js';
@@ -150,6 +150,7 @@ const enableForm = () => {
 const initAdForm = () => {
   initRoomNumberField();
   mainMarker.setLatLng(START_LOCATION);
+  map.setView(START_LOCATION, START_ZOOM);
   fillAddressField(mainMarker.getLatLng());
 }
 

@@ -1,5 +1,6 @@
-/* global L:readonly */
-/* global _:readonly */
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import debounce from 'lodash/debounce';
 
 import { renderNewAd } from './ad.js';
 import { disableForm, enableForm, fillAddressField, initAdForm } from './form.js';
@@ -94,7 +95,7 @@ const renderFilteredPins = (adsData) => {
 getData(SERVER_GET,
   (adsData) => {
     renderPins(adsData)
-    onFilterChange( _.debounce(renderFilteredPins(adsData), renderDelay))
+    onFilterChange( debounce(renderFilteredPins(adsData), renderDelay))
   }, showPopup);
 
-export { map, START_LOCATION, mainMarker };
+export { map, START_LOCATION, START_ZOOM, mainMarker };
