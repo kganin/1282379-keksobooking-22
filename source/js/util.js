@@ -5,7 +5,7 @@ const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
 const getRandomFloat = (min, max, decimal = 5) => {
   if (min < 0 || min > max) {
@@ -13,7 +13,7 @@ const getRandomFloat = (min, max, decimal = 5) => {
   }
   const randomNumber = Math.random() * (max - min) + min;
   return Number(randomNumber.toFixed(decimal));
-}
+};
 
 const shuffleArray = (elements) => {
   const clonedElements = elements.slice(0);
@@ -24,7 +24,7 @@ const shuffleArray = (elements) => {
     clonedElements[j] = swap;
   }
   return clonedElements;
-}
+};
 
 const getRandomArray = (elements) => shuffleArray(elements).slice(getRandomInt(0, elements.length));
 
@@ -56,13 +56,13 @@ const onFileUpload = (fileChooser, preview, FILE_TYPES) => {
       reader.readAsDataURL(file);
     }
   }
-}
+};
 
 const setDefaultPreview = (element, source) => {
   element.src = source
   element.width = '40';
   element.height = '44';
   element.style = '';
-}
+};
 
 export { getRandomInt, getRandomFloat, getRandomArray, getRandomArrayElement, isEscEvent, isEnterEvent, onFileUpload, setDefaultPreview };

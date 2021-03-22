@@ -22,4 +22,4 @@ const sendData = (url, onSuccess, onFail, formData) => {
     .catch(() => onFail('Не удалось отправить форму. Попробуйте ещё раз'))
 };
 
-export { getData, sendData, SERVER_GET, SERVER_POST }
+export { getData, sendData, SERVER_GET, SERVER_POST };

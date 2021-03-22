@@ -40,7 +40,7 @@ const fillCapacity = (container, guests, rooms) => {
     return container.remove();
   }
   container.textContent = `${rooms} ${getWordForm(rooms, ROOMS_WORD_FORMS)} для ${guests} ${getWordForm(guests, GUESTS_WORD_FORMS)}`;
-}
+};
 
 const renderNewAd = (adData) => {
   const newAd = adTemplate.cloneNode(true);

@@ -6,4 +6,4 @@ const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 fileChooser.addEventListener('change', onFileUpload(fileChooser, previewPhoto, FILE_TYPES));
 
-export { previewPhoto }
+export { previewPhoto };
