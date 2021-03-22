@@ -2,7 +2,7 @@ import { isEscEvent, isEnterEvent } from './util.js';
 
 const successPopup = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
 const errorPopup = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
-const errorButton = errorPopup.querySelector('.error__button')
+const errorButton = errorPopup.querySelector('.error__button');
 
 let onPopupClick;
 let onPopupEscKeydown;
@@ -16,13 +16,13 @@ const showPopup = (popupContainer, message) => {
   if (popupContainer.contains(errorButton)) {
     errorButton.addEventListener('keydown', onErrorButtonClick = createOnErrorButtonClick(popupContainer));
   }
-}
+};
 
 const closePopup = (popupContainer) => {
   popupContainer.remove();
   popupContainer.removeEventListener('click', onPopupClick);
   document.removeEventListener('keydown', onPopupEscKeydown);
-}
+};
 
 const createOnErrorButtonClick = (popupContainer) => {
   return (evt) => {
@@ -32,7 +32,7 @@ const createOnErrorButtonClick = (popupContainer) => {
       errorButton.removeEventListener('keydown', onErrorButtonClick);
     }
   }
-}
+};
 
 const createOnPopupClick = (popupContainer) => () => closePopup(popupContainer);
 
@@ -43,6 +43,6 @@ const createOnPopupEscKeydown = (popupContainer) => {
       closePopup(popupContainer);
     }
   }
-}
+};
 
-export { showPopup, successPopup, errorPopup }
+export { showPopup, successPopup, errorPopup };

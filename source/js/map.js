@@ -61,7 +61,7 @@ initAdForm();
 
 const clearMap = () => {
   pins.forEach((pin) => pin.remove())
-}
+};
 
 const renderPins = (adsData) => {
   adsData
@@ -90,7 +90,7 @@ const renderFilteredPins = (adsData) => {
     clearMap();
     renderPins(adsData);
   }
-}
+};
 
 getData(SERVER_GET,
   (adsData) => {

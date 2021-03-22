@@ -30,6 +30,8 @@ const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE_PER_NIGHT = 1000000;
 
+const DECIMAL_COUNT = 5;
+
 const capacity = {
   1: [1],
   2: [1,2],
@@ -60,6 +62,7 @@ const onTitleFieldInput = () => {
   const valueLength = titleField.value.length;
   if (valueLength < MIN_NAME_LENGTH) {
     titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+    titleField.classList.add('ad-form__element--error');
   } else if (valueLength > MAX_NAME_LENGTH) {
     titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
   } else {
@@ -71,14 +74,14 @@ const onTitleFieldInput = () => {
 const onAccomodationFieldChange = () => {
   priceField.placeholder = ACCOMODATION_TYPES[typeField.value]['minPrice'];
   priceField.min = ACCOMODATION_TYPES[typeField.value]['minPrice'];
-}
+};
 
 const onPriceFieldInput = () => {
   if (priceField.value < ACCOMODATION_TYPES[typeField.value]['minPrice']) {
-    priceField.setCustomValidity(`Минимальная стоимость - ${ACCOMODATION_TYPES[typeField.value]['minPrice']} руб.`)
+    priceField.setCustomValidity(`Минимальная стоимость - ${ACCOMODATION_TYPES[typeField.value]['minPrice']} руб.`);
   }
   else if (priceField.value > MAX_PRICE_PER_NIGHT) {
-    priceField.setCustomValidity(`Стоимость не должна превышать ${MAX_PRICE_PER_NIGHT} руб.`)
+    priceField.setCustomValidity(`Стоимость не должна превышать ${MAX_PRICE_PER_NIGHT} руб.`);
   }
   else {
     priceField.setCustomValidity('');
@@ -103,13 +106,13 @@ const onRoomNumberFieldChange = () => initRoomNumberField();
 const onHoursBlockChange = (evt) => {
   timeInField.value = evt.target.value;
   timeOutField.value = evt.target.value;
-}
+};
 
 const fillAddressField = (coordinates) => {
   if (!(adForm.classList.contains('ad-form--disabled'))) {
-    return addressField.value = `${coordinates.lat.toFixed(5)}, ${coordinates.lng.toFixed(5)}`;
+    return addressField.value = `${coordinates.lat.toFixed(DECIMAL_COUNT)}, ${coordinates.lng.toFixed(DECIMAL_COUNT)}`;
   }
-}
+};
 
 const resetCheckboxes = (checkbxoxes) => {
   checkbxoxes.forEach((checkbox) => {
@@ -117,42 +120,42 @@ const resetCheckboxes = (checkbxoxes) => {
       checkbox.checked = false;
     }
   });
-}
+};
 
 const disableFields = (fields) => {
   fields.forEach((field) => {
     field.disabled = true;
     field.classList.add('disabled');
   });
-}
+};
 
 const enableFields = (fields) => {
   fields.forEach((field) => {
     field.disabled = false;
     field.classList.remove('disabled');
   });
-}
+};
 
 const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
   mapFeaturesFields.forEach((field) => field.classList.add('map__feature--disabled'));
   disableFields(adFormFields);
   disableFields(mapFiltersFields);
-}
+};
 
 const enableForm = () => {
   adForm.classList.remove('ad-form--disabled');
   mapFeaturesFields.forEach((field) => field.classList.remove('map__feature--disabled'));
   enableFields(adFormFields);
   enableFields(mapFiltersFields);
-}
+};
 
 const initAdForm = () => {
   initRoomNumberField();
   mainMarker.setLatLng(START_LOCATION);
   map.setView(START_LOCATION, START_ZOOM);
   fillAddressField(mainMarker.getLatLng());
-}
+};
 
 const resetForms = () => {
   adForm.reset();
@@ -160,8 +163,8 @@ const resetForms = () => {
   resetCheckboxes(adFormCheckboxes);
   resetCheckboxes(mapFiltersCheckboxes);
   setDefaultPreview(previewUserpic, defaultPreviewSrc);
-  setDefaultPreview(previewPhoto, defaultPreviewSrc)
-}
+  setDefaultPreview(previewPhoto, defaultPreviewSrc);
+};
 
 const setUserFormSubmit = (onSubmit) => {
   adForm.addEventListener('submit', (evt) => {
