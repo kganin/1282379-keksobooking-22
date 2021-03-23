@@ -5,28 +5,6 @@ import { setDefaultPreview } from './util.js';
 import { defaultPreviewSrc, previewUserpic } from './userpic.js';
 import { previewPhoto } from './photos.js';
 
-const adForm = document.querySelector('.ad-form');
-const adFormFields = adForm.querySelectorAll('fieldset');
-const adFormCheckboxes = adForm.querySelectorAll('.feature__checkbox');
-
-const mapFiltersForm = document.querySelector('.map__filters');
-const mapFiltersFields = mapFiltersForm.querySelectorAll('fieldset');
-const mapFiltersCheckboxes = mapFiltersForm.querySelectorAll('.map__checkbox');
-const mapFeaturesFields = mapFiltersForm.querySelectorAll('.map__feature');
-
-const priceField = adForm.querySelector('#price');
-const priceFieldset =  adForm.querySelector('fieldset:nth-child(5)');
-const typeField = adForm.querySelector('#type');
-const timeInField = adForm.querySelector('#timein');
-const timeOutField = adForm.querySelector('#timeout');
-const hoursBlock = adForm.querySelector('.ad-form__element--time');
-const addressField = adForm.querySelector('#address');
-const titleField = adForm.querySelector('#title');
-const titleFieldset =  adForm.querySelector('fieldset:nth-child(2)');
-const roomNumberField = adForm.querySelector('#room_number');
-const guestNumberField = adForm.querySelector('#capacity');
-const resetButton = adForm.querySelector('.ad-form__reset');
-
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE_PER_NIGHT = 1000000;
@@ -59,6 +37,28 @@ const ACCOMODATION_TYPES = {
   },
 };
 
+const adForm = document.querySelector('.ad-form');
+const adFormFields = adForm.querySelectorAll('fieldset');
+const adFormCheckboxes = adForm.querySelectorAll('.feature__checkbox');
+
+const mapFiltersForm = document.querySelector('.map__filters');
+const mapFiltersFields = mapFiltersForm.querySelectorAll('fieldset');
+const mapFiltersCheckboxes = mapFiltersForm.querySelectorAll('.map__checkbox');
+const mapFeaturesFields = mapFiltersForm.querySelectorAll('.map__feature');
+
+const priceField = adForm.querySelector('#price');
+const priceFieldset =  adForm.querySelector('fieldset:nth-child(5)');
+const typeField = adForm.querySelector('#type');
+const timeInField = adForm.querySelector('#timein');
+const timeOutField = adForm.querySelector('#timeout');
+const hoursBlock = adForm.querySelector('.ad-form__element--time');
+const addressField = adForm.querySelector('#address');
+const titleField = adForm.querySelector('#title');
+const titleFieldset =  adForm.querySelector('fieldset:nth-child(2)');
+const roomNumberField = adForm.querySelector('#room_number');
+const guestNumberField = adForm.querySelector('#capacity');
+const resetButton = adForm.querySelector('.ad-form__reset');
+
 const onTitleFieldInput = () => {
   const valueLength = titleField.value.length;
   if (valueLength < MIN_NAME_LENGTH) {
@@ -74,7 +74,7 @@ const onTitleFieldInput = () => {
   titleField.reportValidity();
 };
 
-const onAccomodationFieldChange = () => {
+const setAccomodationPrice = () => {
   priceField.placeholder = ACCOMODATION_TYPES[typeField.value]['minPrice'];
   priceField.min = ACCOMODATION_TYPES[typeField.value]['minPrice'];
 };
@@ -108,6 +108,7 @@ const initRoomNumberField = () => {
 };
 
 const onRoomNumberFieldChange = () => initRoomNumberField();
+const onAccomodationFieldChange = () => setAccomodationPrice();
 
 const onHoursBlockChange = (evt) => {
   timeInField.value = evt.target.value;
@@ -166,6 +167,7 @@ const initAdForm = () => {
 const resetForms = () => {
   adForm.reset();
   mapFiltersForm.reset();
+  setAccomodationPrice();
   resetCheckboxes(adFormCheckboxes);
   resetCheckboxes(mapFiltersCheckboxes);
   setDefaultPreview(previewUserpic, defaultPreviewSrc);
