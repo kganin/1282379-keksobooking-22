@@ -15,15 +15,16 @@ const mapFiltersCheckboxes = mapFiltersForm.querySelectorAll('.map__checkbox');
 const mapFeaturesFields = mapFiltersForm.querySelectorAll('.map__feature');
 
 const priceField = adForm.querySelector('#price');
+const priceFieldset =  adForm.querySelector('fieldset:nth-child(5)');
 const typeField = adForm.querySelector('#type');
 const timeInField = adForm.querySelector('#timein');
 const timeOutField = adForm.querySelector('#timeout');
 const hoursBlock = adForm.querySelector('.ad-form__element--time');
 const addressField = adForm.querySelector('#address');
 const titleField = adForm.querySelector('#title');
+const titleFieldset =  adForm.querySelector('fieldset:nth-child(2)');
 const roomNumberField = adForm.querySelector('#room_number');
 const guestNumberField = adForm.querySelector('#capacity');
-
 const resetButton = adForm.querySelector('.ad-form__reset');
 
 const MIN_NAME_LENGTH = 30;
@@ -62,11 +63,13 @@ const onTitleFieldInput = () => {
   const valueLength = titleField.value.length;
   if (valueLength < MIN_NAME_LENGTH) {
     titleField.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
-    titleField.classList.add('ad-form__element--error');
+    titleFieldset.classList.add('ad-form__element--error');
   } else if (valueLength > MAX_NAME_LENGTH) {
     titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
+    titleFieldset.classList.add('ad-form__element--error');
   } else {
     titleField.setCustomValidity('');
+    titleFieldset.classList.remove('ad-form__element--error');
   }
   titleField.reportValidity();
 };
@@ -79,12 +82,15 @@ const onAccomodationFieldChange = () => {
 const onPriceFieldInput = () => {
   if (priceField.value < ACCOMODATION_TYPES[typeField.value]['minPrice']) {
     priceField.setCustomValidity(`Минимальная стоимость - ${ACCOMODATION_TYPES[typeField.value]['minPrice']} руб.`);
+    priceFieldset.classList.add('ad-form__element--error');
   }
   else if (priceField.value > MAX_PRICE_PER_NIGHT) {
     priceField.setCustomValidity(`Стоимость не должна превышать ${MAX_PRICE_PER_NIGHT} руб.`);
+    priceFieldset.classList.add('ad-form__element--error');
   }
   else {
     priceField.setCustomValidity('');
+    priceFieldset.classList.remove('ad-form__element--error');
   }
   priceField.reportValidity();
 }
