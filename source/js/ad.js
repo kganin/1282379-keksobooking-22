@@ -14,8 +14,12 @@ const ROOMS_WORD_FORMS = [
 const adTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const getWordForm = (num, wordForms) => {
-  if (num > 1 && num < 5) return wordForms[1];
-  if (num === 1) return wordForms[0];
+  if (num > 1 && num < 5) {
+    return wordForms[1];
+  }
+  if (num === 1) {
+    return wordForms[0];
+  }
   return wordForms[2];
 };
 
