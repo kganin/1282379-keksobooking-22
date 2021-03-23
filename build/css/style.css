@@ -395,12 +395,12 @@ fieldset {
 }
 
 .ad-form__element--error input:hover {
-  border-color: blue;
+  border-color: red;
 }
 
 .ad-form__element--error input:focus {
-  -webkit-box-shadow: 0 0 2px 2px blue;
-          box-shadow: 0 0 2px 2px blue;
+  -webkit-box-shadow: 0 0 2px 2px red;
+          box-shadow: 0 0 2px 2px red;
 }
 
 .ad-form__element--time {
