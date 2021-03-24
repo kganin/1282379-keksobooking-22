@@ -11,10 +11,13 @@ let onErrorButtonClick;
 const showPopup = (popupContainer, message) => {
   document.body.append(popupContainer);
   popupContainer.querySelector('p').textContent = message;
-  popupContainer.addEventListener('click', onPopupClick = createOnPopupClick(popupContainer));
-  document.addEventListener('keydown', onPopupEscKeydown = createOnPopupEscKeydown(popupContainer));
+  onPopupClick = createOnPopupClick(popupContainer);
+  onPopupEscKeydown = createOnPopupEscKeydown(popupContainer);
+  onErrorButtonClick = createOnErrorButtonClick(popupContainer);
+  popupContainer.addEventListener('click', onPopupClick);
+  document.addEventListener('keydown', onPopupEscKeydown);
   if (popupContainer.contains(errorButton)) {
-    errorButton.addEventListener('keydown', onErrorButtonClick = createOnErrorButtonClick(popupContainer));
+    errorButton.addEventListener('keydown', onErrorButtonClick);
   }
 };
 

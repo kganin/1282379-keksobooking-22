@@ -6,8 +6,8 @@ const filterAccomodation = (adData) => {
 };
 
 const filterFeatures = (adData) => {
-  const features = [...mapFiltersForm.querySelectorAll('.map__features input:checked')].map((feature) => feature.value);
-  return !features.length || features.every((feature) => adData.offer.features.includes(feature));
+  const features = [...mapFiltersForm.querySelectorAll('.map__features input:checked')];
+  return !features.length || features.every((feature) => adData.offer.features.includes(feature.value));
 };
 
 const filterPrice = (adData) => {

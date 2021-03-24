@@ -97,17 +97,14 @@ const onPriceFieldInput = () => {
 
 const initRoomNumberField = () => {
   Object.values(guestNumberField.children).forEach((option) => {
-    option.disabled = true;
+    if (capacity[roomNumberField.value].includes(Number(option.value))) {
+      option.disabled = false;
+      option.selected = true;
+    } else {
+      option.disabled = true;
+    }
   });
-  capacity[roomNumberField.value].forEach((elem) => {
-    Object.values(guestNumberField.children).forEach((option) => {
-      if (elem === Number(option.value)) {
-        option.disabled = false;
-        option.selected = true;
-      }
-    });
-  });
-};
+}
 
 const onRoomNumberFieldChange = () => initRoomNumberField();
 const onAccomodationFieldChange = () => setAccomodationPrice();
