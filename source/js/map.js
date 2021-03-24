@@ -19,8 +19,8 @@ const MAIN_PIN_ANCHOR = [26, 52];
 const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
 
-const renderDelay = 500;
-const maxAdsCount = 10;
+const RERENDER_DELAY = 500;
+const MAX_ADS_COUNT = 10;
 
 let pins = [];
 
@@ -65,7 +65,7 @@ const clearMap = () => {
 
 const renderPins = (adsData) => {
   adsData
-    .slice(0, maxAdsCount)
+    .slice(0, MAX_ADS_COUNT)
     .filter(getFilteredAdsData)
     .forEach((adData) => {
       const pinIcon = L.icon({
@@ -95,7 +95,7 @@ const renderFilteredPins = (adsData) => {
 getData(SERVER_GET,
   (adsData) => {
     renderPins(adsData)
-    onFilterChange( debounce(renderFilteredPins(adsData), renderDelay))
+    onFilterChange(debounce(renderFilteredPins(adsData), RERENDER_DELAY))
   }, showPopup);
 
-export { map, START_LOCATION, START_ZOOM, mainMarker };
+export { map, START_LOCATION, START_ZOOM, mainMarker, clearMap, renderPins, renderFilteredPins, RERENDER_DELAY };

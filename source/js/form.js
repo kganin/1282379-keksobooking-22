@@ -1,6 +1,6 @@
-import { START_LOCATION, START_ZOOM, mainMarker, map } from './map.js';
-import { sendData, SERVER_POST } from './backend.js'
-import { errorPopup, successPopup } from './popup.js';
+import { START_LOCATION, START_ZOOM, mainMarker, map, clearMap, renderPins } from './map.js';
+import { sendData, SERVER_POST, SERVER_GET, getData } from './backend.js'
+import { errorPopup, successPopup, showPopup } from './popup.js';
 import { setDefaultPreview } from './util.js';
 import { defaultPreviewSrc, previewUserpic } from './userpic.js';
 import { previewPhoto } from './photos.js';
@@ -96,16 +96,15 @@ const onPriceFieldInput = () => {
 }
 
 const initRoomNumberField = () => {
-  Object.values(guestNumberField.children).forEach((option) => option.disabled = true);
-  capacity[roomNumberField.value].forEach((elem) => {
-    Object.values(guestNumberField.children).forEach((option) => {
-      if (elem === Number(option.value)) {
-        option.disabled = false;
-        option.selected = true;
-      }
-    });
+  Object.values(guestNumberField.children).forEach((option) => {
+    if (capacity[roomNumberField.value].includes(Number(option.value))) {
+      option.disabled = false;
+      option.selected = true;
+    } else {
+      option.disabled = true;
+    }
   });
-};
+}
 
 const onRoomNumberFieldChange = () => initRoomNumberField();
 const onAccomodationFieldChange = () => setAccomodationPrice();
@@ -123,9 +122,7 @@ const fillAddressField = (coordinates) => {
 
 const resetCheckboxes = (checkbxoxes) => {
   checkbxoxes.forEach((checkbox) => {
-    if (checkbox.checked) {
-      checkbox.checked = false;
-    }
+    checkbox.checked = false;
   });
 };
 
@@ -172,6 +169,11 @@ const resetForms = () => {
   resetCheckboxes(mapFiltersCheckboxes);
   setDefaultPreview(previewUserpic, defaultPreviewSrc);
   setDefaultPreview(previewPhoto, defaultPreviewSrc);
+  clearMap();
+  getData(SERVER_GET,
+    (adsData) => {
+      renderPins(adsData);
+    }, showPopup);
 };
 
 const setUserFormSubmit = (onSubmit) => {
@@ -201,4 +203,4 @@ resetButton.addEventListener('click', (evt) => {
   initAdForm();
 })
 
-export { fillAddressField, enableForm, initAdForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit, mapFiltersForm };
+export { fillAddressField, enableForm, initAdForm, disableForm, ACCOMODATION_TYPES, setUserFormSubmit, mapFiltersForm, resetButton, resetForms };
